@@ -15,6 +15,7 @@ def zdgamplot(z, dgam, filename='energydev.png'):
     z,    [m]
     dgam, [1] 
     by default save as energydev.png
+    for ImpactZ -2 output, X[:,4] is -z, X[:,5] is -dgam
     """
     z    = z*1e3           #[mm]
     dgam = dgam*0.511001   #[MeV] 
