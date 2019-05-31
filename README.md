@@ -1,2 +1,2 @@
 # python
-for python modules, such as biaobinplot.py. 
+for python modules, such as bblplot.py. 
