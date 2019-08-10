@@ -78,7 +78,9 @@ def genHaltonTrans(infile,rb,flag='both'):
     import ghalton as gt
     import sys
     
-    M = np.loadtxt(infile,skiprows=1)
+    #M = np.loadtxt(infile,skiprows=1)
+    # do not skip first line now, as elegant2impactz "Np 0 0" line is commented
+    M = np.loadtxt(infile)
     #particle number
     Np = np.shape(M)[0]
     
