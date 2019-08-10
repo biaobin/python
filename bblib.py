@@ -64,7 +64,7 @@ def plotsetting():
 #============================================
 # distribution generation
 #============================================
-def genHaltonTrans(infile,rb):
+def genHaltonTrans(infile,rb,flag='both'):
     """
     replace the transverse gaussian distribution genrated by elegant
     smoothDis6 with uniform cross circle distribution.
@@ -76,6 +76,7 @@ def genHaltonTrans(infile,rb):
     bl.genHaltonTrans(infile='partcl.data',rb=0.4e-3)
     """
     import ghalton as gt
+    import sys
     
     M = np.loadtxt(infile,skiprows=1)
     #particle number
@@ -99,21 +100,45 @@ def genHaltonTrans(infile,rb):
     # prepare for writing into new file
     # first line of particle number
     line1 = np.array([Np,0,0])
+    
+    if flag == 'both':
+        # quad on
+        # ========
+        f = open(infile+'.quadON','w')
+        saveformat = '%22.15e %22.15e %22.15e %22.15e \
+        %22.15e %22.15e %22.15e %22.15e %d'
+        np.savetxt(f,line1.reshape((1,3)),fmt='%d')
+        np.savetxt(f,M,fmt=saveformat)
+        f.close()
 
-    # quad on
-    # ========
-    f = open(infile+'.quadON','w')
-    saveformat = '%22.15e %22.15e %22.15e %22.15e \
-    %22.15e %22.15e %22.15e %22.15e %d'
-    np.savetxt(f,line1.reshape((1,3)),fmt='%d')
-    np.savetxt(f,M,fmt=saveformat)
-    f.close()
-
-    # quad off
-    # ========
-    M[:,1] = 0; #set px=py=0
-    M[:,3] = 0;
-    f = open(infile+".quadOFF",'w')
-    np.savetxt(f,line1.reshape((1,3)),fmt='%d')
-    np.savetxt(f,M,fmt=saveformat)
-    f.close()
+        # quad off
+        # ========
+        M[:,1] = 0; #set px=py=0
+        M[:,3] = 0;
+        f = open(infile+".quadOFF",'w')
+        np.savetxt(f,line1.reshape((1,3)),fmt='%d')
+        np.savetxt(f,M,fmt=saveformat)
+        f.close()
+    elif flag == 'quadon':       
+        # quad on
+        # ========
+        f = open(infile+'.quadON','w')
+        saveformat = '%22.15e %22.15e %22.15e %22.15e \
+        %22.15e %22.15e %22.15e %22.15e %d'
+        np.savetxt(f,line1.reshape((1,3)),fmt='%d')
+        np.savetxt(f,M,fmt=saveformat)
+        f.close()
+    elif flag == 'quadoff':
+        # quad off
+        # ========
+        M[:,1] = 0; #set px=py=0
+        M[:,3] = 0;
+        f = open(infile+".quadOFF",'w')
+        np.savetxt(f,line1.reshape((1,3)),fmt='%d')
+        np.savetxt(f,M,fmt=saveformat)
+        f.close()
+    else:
+        sys.exit("error, flag should be either {both,quadon,quadoff}")
+        
+            
+    
