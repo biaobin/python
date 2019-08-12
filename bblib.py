@@ -135,6 +135,8 @@ def genHaltonTrans(infile,rb,flag='both'):
         # ========
         M[:,1] = 0; #set px=py=0
         M[:,3] = 0;
+        saveformat = '%22.15e %22.15e %22.15e %22.15e \
+        %22.15e %22.15e %22.15e %22.15e %d'
         f = open(infile+".quadOFF",'w')
         np.savetxt(f,line1.reshape((1,3)),fmt='%d')
         np.savetxt(f,M,fmt=saveformat)
